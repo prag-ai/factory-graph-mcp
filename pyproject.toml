@@ -1,13 +1,13 @@
 [project]
 name = "factory-graph-mcp"
-version = "0.1.1"
+version = "0.1.2"
 description = "MCP server that traces upstream equipment in a factory — find where to look first when a machine alarms."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "prag-ai" }]
 requires-python = ">=3.10"
-dependencies = ["mcp>=2.3,<3"]
+dependencies = ["mcp>=2.3,<3", "pydantic>=2", "typing_extensions>=4.6"]
 keywords = ["mcp", "manufacturing", "maintenance", "root-cause", "factory", "smart-factory"]
 classifiers = [
   "Programming Language :: Python :: 3",

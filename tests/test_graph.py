@@ -91,7 +91,7 @@ def test_upstream_cycle_terminates(tmp_path):
 # ── 공통 상류 ──────────────────────────────────────────────────────
 
 def test_common_upstream_two_machines_same_chiller(g):
-    r = g.common_upstream(["CNC-01", "CNC-02"])
+    r = g.trace_common_upstream(["CNC-01", "CNC-02"])
     first = r["shared_upstream"][:3]
     assert set(ids(first)) == {"ADR-01", "CLT-01", "MCC-1"}
     assert all(u["covers_all"] and u["nearest_depth"] == 1 for u in first)
@@ -100,7 +100,7 @@ def test_common_upstream_two_machines_same_chiller(g):
 
 def test_common_upstream_across_lines(g):
     # A열 1호기와 B열 3호기: 칠러는 다르지만 냉각탑과 압축공기는 같다
-    r = g.common_upstream(["CNC-01", "CNC-03"])
+    r = g.trace_common_upstream(["CNC-01", "CNC-03"])
     shared = ids(r["shared_upstream"])
     assert shared[0] == "ADR-01"            # 둘 다 바로 받는 것
     assert "CT-01" in shared and "TR-1" in shared
@@ -109,7 +109,7 @@ def test_common_upstream_across_lines(g):
 
 def test_common_upstream_needs_two(g):
     with pytest.raises(DataError):
-        g.common_upstream(["CNC-01"])
+        g.trace_common_upstream(["CNC-01"])
 
 
 # ── 데이터 검사 ────────────────────────────────────────────────────
@@ -141,11 +141,30 @@ def test_tools_over_mcp(g):
         async with Client(build_server(g)) as c:
             tools = {t.name: t for t in (await c.list_tools()).tools}
             assert set(tools) == {"find_equipment", "get_equipment", "trace_upstream",
-                                  "common_upstream", "describe_plant"}
+                                  "trace_common_upstream", "describe_plant"}
             assert all(t.annotations.read_only_hint for t in tools.values())
-            res = await c.call_tool("common_upstream", {"equipment_ids": ["CNC-01", "CNC-02"]})
+            res = await c.call_tool("trace_common_upstream", {"equipment_ids": ["CNC-01", "CNC-02"]})
             assert not res.is_error
             body = res.structured_content or json.loads(res.content[0].text)
             assert "CLT-01" in json.dumps(body, ensure_ascii=False)
+
+    asyncio.run(run())
+
+
+def test_tool_schemas_are_complete(g):
+    """모든 인자에 설명이 있고, 모든 도구에 출력 스키마가 있다(디렉터리 품질 점수의 근거)."""
+    from mcp import Client
+
+    async def run():
+        async with Client(build_server(g)) as c:
+            for t in (await c.list_tools()).tools:
+                assert t.description and len(t.description) > 40, t.name
+                assert t.output_schema, f"{t.name} 출력 스키마 없음"
+                for name, prop in t.input_schema.get("properties", {}).items():
+                    assert prop.get("description"), f"{t.name}.{name} 설명 없음"
+            bad = await c.call_tool("trace_common_upstream", {"equipment_ids": ["1호기"]})
+            assert bad.is_error
+            ok = await c.call_tool("describe_plant", {})
+            assert ok.structured_content["equipment"] == 13
 
     asyncio.run(run())

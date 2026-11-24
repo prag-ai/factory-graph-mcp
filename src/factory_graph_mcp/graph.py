@@ -162,7 +162,7 @@ class FactoryGraph:
             "cycles_skipped": cycles,
         }
 
-    def common_upstream(self, equipment_ids: list[str], max_depth: int = 5, kinds: list[str] | None = None) -> dict:
+    def trace_common_upstream(self, equipment_ids: list[str], max_depth: int = 5, kinds: list[str] | None = None) -> dict:
         """여러 설비에 동시에 이상이 있을 때, 그 설비들이 함께 쓰는 상류를 묶는다.
 
         둘 이상이 함께 쓰는 상류만 돌려주고, 많이 겹칠수록·가까울수록 앞에 둔다.

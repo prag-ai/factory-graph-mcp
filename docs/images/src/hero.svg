@@ -57,7 +57,7 @@
   <!-- 오른쪽: 도구 결과 -->
   <rect x="620" y="24" width="320" height="300" rx="10" fill="#f3f5f8" stroke="#c9d1db" stroke-width="1.5"/>
   <text x="640" y="56" font-size="15" font-weight="700" fill="#1c1c1e">AI가 부른 도구</text>
-  <text x="640" y="88" font-family="D2Coding" font-size="15" fill="#0f766e">common_upstream(</text>
+  <text x="640" y="88" font-family="D2Coding" font-size="15" fill="#0f766e">trace_common_upstream(</text>
   <text x="656" y="110" font-family="D2Coding" font-size="15" fill="#0f766e">["1호기", "2호기"])</text>
   <line x1="640" y1="128" x2="920" y2="128" stroke="#c9d1db" stroke-width="1"/>
   <text x="640" y="156" font-size="14" fill="#5b6b7b">두 대가 함께 쓰는 냉각 계통</text>

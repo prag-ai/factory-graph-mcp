@@ -15,7 +15,7 @@
 > 1호기랑 2호기에 동시에 스핀들 온도 알람이 떴어. 어디부터 봐야 해?
 
 ```python
-common_upstream(["1호기", "2호기"], kinds=["절삭유 냉각수", "냉각수", "순환수"])
+trace_common_upstream(["1호기", "2호기"], kinds=["절삭유 냉각수", "냉각수", "순환수"])
 ```
 
 | 상류 설비 | 이름 | 공급하는 설비 | 거리 |
@@ -45,7 +45,7 @@ common_upstream(["1호기", "2호기"], kinds=["절삭유 냉각수", "냉각수
 | `find_equipment` | "1호기", "칠러1"처럼 현장에서 부르는 이름으로 설비 번호를 찾는다 |
 | `get_equipment` | 설비 한 대의 정보와 바로 붙은 연결(받는 것, 주는 것) |
 | `trace_upstream` | 한 설비에서 상류를 가까운 순서로 따라간다. 무엇이 어떤 길로 흘러오는지(`path`)까지 |
-| `common_upstream` | 여러 설비에 동시에 이상이 있을 때 함께 쓰는 상류를 묶는다 |
+| `trace_common_upstream` | 여러 설비에 동시에 이상이 있을 때 함께 쓰는 상류를 묶는다 |
 | `describe_plant` | 불러온 공장의 규모(설비 수, 연결 종류) |
 
 서로 주고받는 연결(예: 기계가 온도 조절기에 전원을 주고, 조절기가 기계에 온수를 주는 경우)이 있어도 끝없이 돌지 않습니다. 한 번 본 설비는 다시 따라가지 않고 `cycles_skipped`에 적어 둡니다.
@@ -187,7 +187,7 @@ MIT
 
 Machines in a plant depend on each other: a machining center gets coolant from a chiller, compressed air from a compressor, and power from a panel. The machine that raises the alarm is often not the cause. The cause sits **upstream**, and the upstream machine may not have alarmed yet.
 
-`factory-graph-mcp` reads two CSV files (an equipment list and a connection table) and gives an AI read-only tools to walk those connections: `find_equipment`, `get_equipment`, `trace_upstream`, `common_upstream`, `describe_plant`. Cycles are handled. A sample CNC machining plant (13 machines) is bundled.
+`factory-graph-mcp` reads two CSV files (an equipment list and a connection table) and gives an AI read-only tools to walk those connections: `find_equipment`, `get_equipment`, `trace_upstream`, `trace_common_upstream`, `describe_plant`. Cycles are handled. A sample CNC machining plant (13 machines) is bundled.
 
 ```bash
 uvx factory-graph-mcp --check
