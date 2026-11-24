@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 960 362" font-family="Pretendard">
+  <rect width="960" height="362" fill="#ffffff"/>
+  <image x="0" y="0" width="474" height="316" preserveAspectRatio="xMidYMid slice" xlink:href="condenser_clean.jpg"/>
+  <image x="486" y="0" width="474" height="316" preserveAspectRatio="xMidYMid slice" xlink:href="condenser_clogged.jpg"/>
+  <text x="237" y="346" text-anchor="middle" font-size="18" font-weight="600" fill="#1c1c1e">깨끗한 칠러 응축기</text>
+  <text x="723" y="346" text-anchor="middle" font-size="18" font-weight="600" fill="#c62828">먼지로 막힌 응축기 — 칠러 알람은 아직 없다</text>
+</svg>

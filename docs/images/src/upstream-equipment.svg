@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 960 236" font-family="Pretendard">
+  <rect width="960" height="236" fill="#ffffff"/>
+  <image x="0"   y="0" width="184" height="186" xlink:href="chiller.jpg"/>
+  <image x="194" y="0" width="184" height="186" xlink:href="compressor.jpg"/>
+  <image x="388" y="0" width="184" height="186" xlink:href="tower.jpg"/>
+  <image x="582" y="0" width="184" height="186" xlink:href="pump.jpg"/>
+  <image x="776" y="0" width="184" height="186" xlink:href="panel.jpg"/>
+  <g font-size="16" font-weight="600" fill="#1c1c1e" text-anchor="middle">
+    <text x="92"  y="214">칠러</text>
+    <text x="286" y="214">공기 압축기</text>
+    <text x="480" y="214">냉각탑</text>
+    <text x="674" y="214">순환 펌프</text>
+    <text x="868" y="214">분전반</text>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+[project]
+name = "factory-graph-mcp"
+version = "0.1.0"
+description = "MCP server that traces upstream equipment in a factory — find where to look first when a machine alarms."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "prag-ai" }]
+requires-python = ">=3.10"
+dependencies = ["mcp>=2.3,<3"]
+keywords = ["mcp", "manufacturing", "maintenance", "root-cause", "factory", "smart-factory"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Manufacturing",
+  "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+Homepage = "https://github.com/prag-ai/factory-graph-mcp"
+Blog = "https://prag-ai.com"
+
+[project.scripts]
+factory-graph-mcp = "factory_graph_mcp.server:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/factory_graph_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
