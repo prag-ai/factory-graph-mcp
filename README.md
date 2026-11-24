@@ -1,6 +1,6 @@
 # factory-graph-mcp
 
-[![PyPI](https://img.shields.io/pypi/v/factory-graph-mcp)](https://pypi.org/project/factory-graph-mcp/) [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.prag--ai%2Ffactory--graph--mcp-0B1220)](https://registry.modelcontextprotocol.io/v0/servers?search=factory-graph-mcp) [![test](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml)
+[![PyPI](https://img.shields.io/pypi/v/factory-graph-mcp)](https://pypi.org/project/factory-graph-mcp/) [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.prag--ai%2Ffactory--graph--mcp-0B1220)](https://registry.modelcontextprotocol.io/v0/servers?search=factory-graph-mcp) [![test](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml) [![prag-ai/factory-graph-mcp MCP server](https://glama.ai/mcp/servers/prag-ai/factory-graph-mcp/badges/score.svg)](https://glama.ai/mcp/servers/prag-ai/factory-graph-mcp)
 
 **설비에 알람이 떴을 때, 어디부터 봐야 하는지 짚어 주는 MCP 서버입니다.**
 
