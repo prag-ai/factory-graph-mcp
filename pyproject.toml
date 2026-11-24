@@ -1,6 +1,6 @@
 [project]
 name = "factory-graph-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server that traces upstream equipment in a factory — find where to look first when a machine alarms."
 readme = "README.md"
 license = "MIT"

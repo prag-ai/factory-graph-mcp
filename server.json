@@ -3,7 +3,7 @@
   "name": "io.github.prag-ai/factory-graph-mcp",
   "title": "Factory Graph",
   "description": "Trace upstream factory equipment so AI knows where to look first when a machine alarms.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "websiteUrl": "https://github.com/prag-ai/factory-graph-mcp",
   "repository": {
     "url": "https://github.com/prag-ai/factory-graph-mcp",
@@ -13,7 +13,7 @@
     {
       "registryType": "pypi",
       "identifier": "factory-graph-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": { "type": "stdio" },
       "environmentVariables": [
         {
