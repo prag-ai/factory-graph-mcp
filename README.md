@@ -1,5 +1,7 @@
 # factory-graph-mcp
 
+[![PyPI](https://img.shields.io/pypi/v/factory-graph-mcp)](https://pypi.org/project/factory-graph-mcp/) [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.prag--ai%2Ffactory--graph--mcp-0B1220)](https://registry.modelcontextprotocol.io/v0/servers?search=factory-graph-mcp) [![test](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/prag-ai/factory-graph-mcp/actions/workflows/test.yml)
+
 **설비에 알람이 떴을 때, 어디부터 봐야 하는지 짚어 주는 MCP 서버입니다.**
 
 ![1·2호기에 동시에 스핀들 온도 알람이 떴을 때, 두 대가 함께 쓰는 냉각 계통을 따라 올라가면 1·2호기에만 절삭유를 보내는 칠러 1호가 나온다. 냉각탑은 정상인 3·4호기도 쓰므로 칠러 1호를 먼저 본다.](docs/images/hero.png)
@@ -57,7 +59,7 @@ P-01    냉각탑 순환 펌프  두 대 모두 공급   3단계 위
 [uv](https://docs.astral.sh/uv/)가 있으면 설치 없이 바로 실행됩니다.
 
 ```bash
-uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp --check
+uvx factory-graph-mcp --check
 ```
 
 `--check`는 데이터를 읽어 요약만 찍고 끝냅니다. 처음에는 들어 있는 예제 공장(CNC 가공 공장, 설비 13대)을 읽습니다.
@@ -71,7 +73,7 @@ uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp --
   "mcpServers": {
     "factory-graph": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/prag-ai/factory-graph-mcp", "factory-graph-mcp"]
+      "args": ["factory-graph-mcp"]
     }
   }
 }
@@ -82,13 +84,13 @@ uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp --
 ### Claude Code
 
 ```bash
-claude mcp add factory-graph -- uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp
+claude mcp add factory-graph -- uvx factory-graph-mcp
 ```
 
 ### Codex (OpenAI)
 
 ```bash
-codex mcp add factory-graph -- uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp
+codex mcp add factory-graph -- uvx factory-graph-mcp
 ```
 
 명령 대신 `~/.codex/config.toml`에 직접 적어도 됩니다.
@@ -96,7 +98,7 @@ codex mcp add factory-graph -- uvx --from git+https://github.com/prag-ai/factory
 ```toml
 [mcp_servers.factory-graph]
 command = "uvx"
-args = ["--from", "git+https://github.com/prag-ai/factory-graph-mcp", "factory-graph-mcp"]
+args = ["factory-graph-mcp"]
 ```
 
 ### Cursor
@@ -108,7 +110,7 @@ args = ["--from", "git+https://github.com/prag-ai/factory-graph-mcp", "factory-g
   "mcpServers": {
     "factory-graph": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/prag-ai/factory-graph-mcp", "factory-graph-mcp"]
+      "args": ["factory-graph-mcp"]
     }
   }
 }
@@ -184,7 +186,7 @@ Machines in a plant depend on each other: a machining center gets coolant from a
 `factory-graph-mcp` reads two CSV files (an equipment list and a connection table) and gives an AI read-only tools to walk those connections: `find_equipment`, `get_equipment`, `trace_upstream`, `common_upstream`, `describe_plant`. Cycles are handled. A sample CNC machining plant (13 machines) is bundled.
 
 ```bash
-uvx --from git+https://github.com/prag-ai/factory-graph-mcp factory-graph-mcp --check
+uvx factory-graph-mcp --check
 ```
 
 Korean-first — as of November 24, 2026, the first Korean-language manufacturing MCP server. Equipment names, shop-floor aliases ("1호기", "콤프"), tool descriptions, and the sample plant are in Korean; data in any other language works too. Use your own data with `--data <folder>` (columns are described above). It does not diagnose, control equipment, or read live sensor data — it narrows down where to look.
