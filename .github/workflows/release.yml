@@ -1,0 +1,62 @@
+# 버전 태그(v0.1.0 같은)를 push하면 PyPI에 올리고 공식 MCP Registry에 등록한다.
+# 토큰을 저장하지 않는다: PyPI는 Trusted Publishing, Registry는 GitHub OIDC로 로그인한다.
+name: release
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: 태그·pyproject·server.json 버전이 같은지 확인
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PY=$(grep -m1 '^version' pyproject.toml | cut -d'"' -f2)
+          SJ=$(python3 -c "import json;d=json.load(open('server.json'));print(d['version'])")
+          PK=$(python3 -c "import json;d=json.load(open('server.json'));print(d['packages'][0]['version'])")
+          echo "tag=$TAG pyproject=$PY server.json=$SJ package=$PK"
+          test "$TAG" = "$PY" && test "$TAG" = "$SJ" && test "$TAG" = "$PK"
+      - run: uv venv && uv pip install -e ".[dev]" && .venv/bin/python -m pytest -q
+      - run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  pypi:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  mcp-registry:
+    needs: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: mcp-publisher 설치
+        run: |
+          curl -sL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+      - name: PyPI에 새 버전이 보일 때까지 기다리기
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          for i in $(seq 1 30); do
+            curl -sf "https://pypi.org/pypi/factory-graph-mcp/$V/json" >/dev/null && exit 0
+            sleep 10
+          done
+          echo "PyPI에 $V 가 아직 없다"; exit 1
+      - run: ./mcp-publisher login github-oidc
+      - run: ./mcp-publisher publish
